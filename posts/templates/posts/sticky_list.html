@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Sticky Notes - {{page_title}}
+{% endblock %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<main>
+    <h2>{{page_title}}</h2>
+    
+    <div class="row justify-content-center" style="align-items: center;">  
+        {% for post in posts %}
+            <div class="col-auto">   <!-- Responsive columns -->
+                <div class="sticky_container" id="sticky-{{ post.pk }}">
+                    <a href="{% url 'sticky_details' pk=post.pk %}" class="text-decoration-none">
+                        <div class="sticky_title">
+                            {{ post.title }}
+                        </div>
+                        <div class="sticky_content">
+                            <p>{{ post.content }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+</main>
+
+<script>
+    const colors = [
+        '#FFFFFF', '#E6E6EE6', '#B3EFBD', '#B3F43F',
+        '#A8DAFF', '#D38DFF', '#FFA8D8', '#FFB8A8',
+        '#FFD3A8', 'FFE299'
+    ];
+
+    function getRandomColor() {
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function setRandomColors() {
+        document.querySelectorAll('.sticky_container').forEach(sticky => {
+            sticky.style.backgroundColor = getRandomColor();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', setRandomColors);
+</script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Sticky Notes - {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="content" style="margin-left: auto; margin-right: auto; margin-top: 20px;">
+        <h2>
+            {{ post.title }}
+        </h2>
+        <p class="note-content">
+            {{ post.content }}
+        </p>
+        <p style="margin-top: auto; ">
+            Created at: {{ post.created_at }}
+        </p>
+    </div>
+    
+    <div style="text-align: center;  padding-top: 30px; padding-bottom: 30px;">
+        <a class="a1" href="{% url 'sticky_update' pk=post.pk %}">Update Sticky Note</a> 
+        <a class="a1" href="{% url 'sticky_delete' pk=post.pk %}">Delete Sticky Note</a>
+        <a class="a1" href="{% url 'sticky_list' %}">Back to Sticky Note List</a>
+    </div>
+
+<script>
+    const colors = [
+        '#FFFFFF', '#E6E6EE6', '#B3EFBD', '#B3F43F',
+        '#A8DAFF', '#D38DFF', '#FFA8D8', '#FFB8A8',
+        '#FFD3A8', 'FFE299'
+    ];
+
+    function getRandomColor() {
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function setRandomColors() {
+        document.querySelectorAll('.content').forEach(sticky => {
+            sticky.style.backgroundColor = getRandomColor();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', setRandomColors);
+</script>
+
+{% endblock %}
